@@ -1,0 +1,19 @@
+{
+  "name": "ee-objects/members",
+  "description": "Provides an object based approach to ExpressionEngine Channel Entries",
+  "require": {
+    "php": ">=7.1",
+    "ee-objects/core": "dev-main"
+  },
+  "prefer-stable": true,
+  "authors": [{
+    "name": "Eric Lamb",
+    "email": "eric@mithra62.com"
+  }],
+  "autoload": {
+    "psr-4": {
+      "EeObjects\\": "src"
+    }
+  },
+  "license": "MIT"
+}
