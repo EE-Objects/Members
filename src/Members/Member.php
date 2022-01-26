@@ -6,6 +6,9 @@ use EeObjects\AbstractItem;
 use EeObjects\Exceptions\Members\MemberException;
 use ExpressionEngine\Model\Member\Member as MemberModel;
 use ExpressionEngine\Service\Model\Model;
+use ExpressionEngine\Service\Validation\ValidationAware;
+use ExpressionEngine\Service\Validation\Validator;
+use ExpressionEngine\Service\Validation\Result AS ValidateResult;
 
 class Member extends AbstractItem
 {
@@ -24,6 +27,24 @@ class Member extends AbstractItem
      * @var Fields
      */
     protected $fields = null;
+
+    /**
+     * The Validation Rules we run by default
+     * @var string[]
+     */
+    protected $rules = [
+        'email' => 'required|email',
+        'username' => 'required',
+        'screen_name' => 'required',
+        'password' => 'required',
+        'role_id' => 'isNaturalNoZero',
+        'unique_id' => 'required|alphaNumeric',
+        'crypt_key' => 'required|alphaNumeric',
+        'ip_address' => 'required|ipAddress',
+        'join_date' => 'required',
+        'language' => 'required',
+        'timezone' => 'required',
+    ];
 
     /**
      * Uses the ChannelEntry object to initialize our own object
@@ -178,7 +199,7 @@ class Member extends AbstractItem
             return true;
         }
 
-        throw new EntryException('Could not create Entry!');
+        throw new MemberException('Could not create Entry!');
     }
 
     /**
@@ -297,5 +318,19 @@ class Member extends AbstractItem
         }
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getValidationRules(): array
+    {
+        foreach($this->getFields()->allFields() As $field) {
+            if ($field['field_required'] == 'y') {
+                $this->rules[$field['field_name']] = 'required';
+            }
+        }
+
+        return $this->rules;
     }
 }
