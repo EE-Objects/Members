@@ -3,7 +3,9 @@
   "description": "Provides an object based approach to ExpressionEngine Channel Entries",
   "require": {
     "php": ">=7.1",
-    "ee-objects/core": "^0.2"
+    "ee-objects/exceptions": "^0.1",
+    "ee-objects/fields": "^0.1",
+    "ee-objects/item": "^0.1"
   },
   "prefer-stable": true,
   "authors": [{
